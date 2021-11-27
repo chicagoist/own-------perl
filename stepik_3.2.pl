@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 #===============================================================================
 #
-#         FILE:  1.0.pl
+#         FILE:  stepik_3.2.pl
 #
-#        USAGE:  ./1.0.pl  
+#        USAGE:  ./stepik_3.2.pl
 #
 #  DESCRIPTION:  
 #
@@ -35,6 +35,7 @@ use POSIX;
 
 
 =begin   BlockCommentNo_1
+https://stepik.org/lesson/51555/step/3?auth=login&unit=29819
 Напишите программу валидатор Российских номеров в формате +7 (xxx) xxx-xx-xx
 Sample Input 1:
 +7 (999) 999-99-99
