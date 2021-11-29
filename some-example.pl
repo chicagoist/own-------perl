@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
 #===============================================================================
 #
-#         FILE:  stepik_3.2.pl
+#         FILE:  some-example.pl
 #
-#        USAGE:  ./stepik_3.2.pl
+#        USAGE:  ./some-example.pl
 #
 #  DESCRIPTION:  
 #
@@ -13,8 +13,8 @@
 #        NOTES:  ---
 #       AUTHOR:  Valerii Dubkoff
 #      COMPANY:  
-#      VERSION:  1.0
-#      CREATED:  24.11.2021 21:10:24
+#      VERSION:
+#      CREATED:
 #     REVISION:  ---
 #===============================================================================
 
@@ -42,5 +42,8 @@ printf("%s\n", <STDIN> =~ /\by[es]*\b/i ? "КРАСАВЧЕг!": "Давайдо
 
 # однострочник для Windows perl -e "printf(\"%s\n\", <STDIN> =~ /\by[es]*\b/i ? \"SUPER\": \"BUY\")"
 # и для Linux  perl -e 'printf("%s\n", <STDIN> =~ /\by[es]*\b/i ? "SUPER": "BUY")'
+
+
+
 
 
