@@ -37,8 +37,16 @@ use POSIX;
 
 
 my $names = 'Fred or Barney';
-
 if( $names =~ m/(\w+) and (\w+)/ ) { # Нет совпадения
  say  "I saw $1 and $2";
-
+ # You don’t see the message from say, because the string has an or  where you were expecting an and.
 }
+
+if( $names =~ m/(\w+) (and|or) (\w+)/ ) { # Теперь совпадение есть
+ say "I saw $1 and $2";
+ # Oops! You see a message this time, but it doesn’t have the second name in it because you added another
+ # set of capture parentheses. The value in $2 is from the alternation and the second name is now
+ # in $3 (which we don’t output): I saw Fred and or
+ say "I saw $1 and $3";
+}
+
