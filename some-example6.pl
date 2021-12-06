@@ -103,3 +103,39 @@ $_ = " Input  data\t may have    extra whitespace. ";
 s/^\s+|\s+$//g;  # Удаление начальных и завершающих пропусков
 print $i++," : "; say "|$_|";
 
+my $file_name = "/usr/share/perl";
+say '/usr/share/perl = ', $file_name;
+$file_name =~ s#\A.*/##s;  # In $file_name, remove any Unix-style path
+say '/usr/share/perl = ', $file_name;
+
+
+#Комбинация \U  преобразует все последующие символы к верхнему регистру:
+$_ = "I saw Barney with Fred and Wilma.";
+say $_;
+s/(fred|barney)/\U$1/gi;  # $_ теперь содержит "I saw BARNEY with FRED."
+say $_;
+
+#Аналогичная комбинация \L обеспечивает преобразование к нижнему регистру. Продолжение предыдущего фрагмента:
+s/(fReD|bArNey)/\L$1/gi;  # $_ теперь содержит "I saw barney with fred."
+say $_;
+
+# По умолчанию преобразование распространяется на остаток (заменяюQ щей) строки; также можно вручную отменить
+# переключение регистра комбинацией \E:
+s/(\w+) with (\w+)/\U$2\E with $1/i;  # $_ содержит "I saw FRED with barney."
+say $_;
+
+#При записи в нижнем регистре (\l и \u) эти комбинации влияют тольQ ко на следующий символ:
+s/(fred|barney)/\u$1/ig;  # $_ теперь содержит "I saw FRED with Barney."
+say $_;
+
+# Они даже могут использоваться в сочетании друг с другом. Например, объединение \u с \L
+# означает: «все в нижнем регистре, но первая буква в верхнем регистре»:
+s/(fred|barney)/\u\L$1/ig;  # $_ теперь содержит "I saw Fred with Barney."
+say $_;
+
+my $name = "VALERII";
+# so work too
+print "Hello, \L\u$name\E, would you like to play a game?\n"; # Hello, Valerii, would you like to play a game?
+
+
+
