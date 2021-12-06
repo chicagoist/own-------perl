@@ -202,3 +202,6 @@ $data1 = "I thought you said Fred and  <BOLD>Velma</BOLD>, not  <BOLD>Wilma</BOL
 $data1 =~ s#(<BOLD>(.*?)</BOLD>)#$2#g; # typo in translated book at page 177
 say ">$data1<";                        # >I thought you said Fred and  Velma, not  Wilma<
 
+$_ = "Live is Life!";
+/^(L){1}\w{3}\s+[i|s]+\s+(L){1}\D{3}\S\z/;
+say $&;

@@ -39,9 +39,10 @@ my $other_text = "tyranosaurus steak";
 if ($other_text =~ /(bronto)?saurus (steak|burger)/i) {
     print "Fred wants a $2\n";
     print "\$1 = $1\n";
-    #Даже если bronto отсутствует в строке, эта часть шаблона соответствуQ ет переменной $1.
+    #Даже если bronto отсутствует в строке, эта часть шаблона соответствует переменной $1.
 
-}else {
+}
+else {
     print "Fred wants a $1\n";
 }
 
@@ -58,7 +59,8 @@ if ($other_text =~ /(?:bronto)?saurus (steak|burger)/i) {
     print "\$1 again = $1\n";
     #Даже если bronto отсутствует в строке, эта часть шаблона соответствует переменной $1.
 
-}else {
+}
+else {
     print "again Fred wants a $1\n";
 }
 
@@ -71,6 +73,5 @@ if (/(?:bronto)?saurus (?:BBQ )?(steak|burger)/) {
     #     $1 Fred wants a steak
     #     $1 again = steak
     #     Use of uninitialized value $_ in pattern match (m//) at some-example4.pl line 65.
-
 
 }
