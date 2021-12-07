@@ -15,6 +15,7 @@ use Encode::Locale;
 #use POSIX;
 #use utf8;
 
+# Updating Many Files
 
 # Обновление нескольких файлов
 # В следующем примере используются сотни файлов, имеющих похоQ жий формат.
@@ -43,8 +44,10 @@ use Encode::Locale;
 #
 chomp(@_);
 chomp(my $date = `date`);
-$^I = ".bak";
+$^I = ".bak";  # $^I The current value of the inplace-edit extension. Use undef to disable inplace editing.
+#  Mnemonic: value of -i switch.
 while (<>) {
+    s/^#\s*//g;
     s/\bAuthor:.*/Author: Randal L. Schwartz/;
     s/\bPhone:.*\n//;
     s/\bDate:.*/Date: $date/;
