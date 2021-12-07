@@ -205,3 +205,64 @@ say ">$data1<";                        # >I thought you said Fred and  Velma, no
 $_ = "Live is Life!";
 /^(L){1}\w{3}\s+[i|s]+\s+(L){1}\D{3}\S\z/;
 say $&;
+
+
+# Многострочный поиск
+
+# Например, следующая строка состоит из четырех логических строк:
+$_ = "I'm much better\nthan Barney is\nat bowling,\nWilma.\n";
+print ">$_<\n";
+
+print "Found 'wilma' at start of line\n" if /^wilma\b/im;
+
+# В следующем примеQ ре весь файл читается в одну переменную 2 , после чего имя файла вывоQ дится в начале каждой
+# строки:
+my $filename = "some-example6.pl";
+open FILE, $filename or die "Can't open '$filename': $!";
+my $lines = join '', <FILE>;
+$lines =~ s/^/$filename: /gm;
+say $lines;
+
+# Обновление нескольких файлов
+# В следующем примере используются сотни файлов, имеющих похоQ жий формат.
+# Один из них, fred03.dat, содержит строки следующего вида:
+#
+#    Program name: granite
+#    Author: Gilbert Bates
+#    Company: RockSoft
+#    Department: R&D
+#    Phone: +1 503 555-0095
+#    Date: Tues March 9, 2004
+#    Version: 2.1
+#    Size: 21k
+#    Status: Final beta
+
+# Требуется обновить файл и включить в него другую информацию. ПоQсле обновления файл должен выглядеть примерно так:
+#
+#    Program name: granite
+#    Author: Randal L. Schwartz
+#    Company: RockSoft
+#    Department: R&D
+#    Date: December 15, 2021 6:38 pm
+#    Version: 2.1
+#    Size: 21k Status:
+#    Final beta
+#
+chomp(my $date = `date`);
+$^I = ".bak";
+while (<>) {
+    s/^Author:.*/Author: Randal L. Schwartz/;
+    s/^Phone:.*\n//;
+    s/^Date:.*/Date: $date/;
+    print;
+}
+
+# Program name: granite
+#     Author: Gilbert Bates
+#     Company: RockSoft
+#     Department: R&D
+#     Phone: +1 503 555-0095
+# Date: Tues March 9, 2004
+# Version: 2.1
+# Size: 21k
+#     Status: Final beta
