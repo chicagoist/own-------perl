@@ -249,7 +249,8 @@ say $lines;
 #    Final beta
 #
 chomp(my $date = `date`);
-$^I = ".bak";
+$^I = ".bak"; # $^I The current value of the inplace-edit extension. Use undef to disable inplace editing.
+#  Mnemonic: value of -i switch.
 while (<>) {
     s/^Author:.*/Author: Randal L. Schwartz/;
     s/^Phone:.*\n//;
@@ -266,3 +267,11 @@ while (<>) {
 # Version: 2.1
 # Size: 21k
 #     Status: Final beta
+#
+# Go to file change_freq.pl
+
+
+# In-Place Editing from the Command Line:
+# perl -p -i.bak -w -e 's/^Author:.*/Author: Randal L. Schwartz/g' fred*.dat
+# perl -p -i.bak -w -e 's/^#\s*//g' fred*.dat
+
