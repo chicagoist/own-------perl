@@ -98,3 +98,35 @@ my ($fred1, $barney, $I_am_curious) = ("Fred", "Barney", "YES");
 # с круглыми и фигурными скобками.
 
 
+#  ПРОСТЕЙШИЙ БЛОК
+
+# простейший блок:
+# {
+# тело;
+# тело;
+# тело;
+# }
+
+# он создает область видимости (scope) для временных лексических переменных:
+{
+    print "Please enter a number: ";
+    chomp(my $n = <STDIN>);
+    $n =~ s/^(\d*[.]?\d*).*\d*$/$1/;
+    # chomp(@_ = <STDIN>); # Like a Draft. )))
+    # my $n;
+    # foreach (@_) {
+    #     s/^(\d*[.]?\d*).*\d*$/$1/;
+    #     $n  = $_;
+    # }
+    my $root = sqrt $n;  # Вычисление квадратного корня
+    print "The square root of $n is $root.\n";
+}
+# Please enter a number: 5.2 5 555
+# The square root of 5.2 is 2.28035085019828.
+#
+say $n; # Unable to find variable declaration.
+say $root; # Unable to find variable declaration.
+
+
+# СЕКЦИЯ elsif
+
