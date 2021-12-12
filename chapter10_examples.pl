@@ -15,7 +15,7 @@ use 5.10.0;
 
 use strict;
 use warnings FATAL => 'all';
-use diagnostics;
+#use diagnostics;
 use utf8;
 binmode(STDIN, ':utf8');
 binmode(STDOUT, ':utf8');
@@ -476,7 +476,7 @@ print  $last_name; # 0
 # Даже если значение $last_name{$someone} равно 0, эта версия все равно работает:
 use 5.10.0;
 my %last_name;
-my $someone;
+my $someone = "";
 my $last_name = $last_name{$someone} // '(No last name)'; # in 5.34.0 working at well both: old and this //
 
 # Допустим, программа должна выводить сообщения только при заданной переменной среды VERBOSE. Мы проверяем значение,
@@ -486,11 +486,50 @@ my $Verbose = $ENV{VERBOSE} // 1;
 print "I can talk to you!\n" if $Verbose;
 
 
-# Следующая программа проверяет, как работает оператор //: она перебирает несколько значений и смотрит,
-# какие из них будут заменены значением по умолчанию default:
-use 5.10.0;
-foreach my $try ( 0, undef, '0', 1, 25 ) {
-print "Trying [$try] ---> ";
-my $value = $try // 'default';
-say "\tgot [$value]";
+    # Следующая программа проверяет, как работает оператор //: она перебирает несколько значений и смотрит,
+    # какие из них будут заменены значением по умолчанию default:
+    #use 5.01.0;
+    use DDP;
+    print "\n\n";
+    foreach my $try (0, undef, '0', 1, 25, 'undef') {
+        print "If \$try have : ";
+        print "\n"; p $try;
+        my $value = $try // 'default';
+        print "got [$value] value.\n\n";
+    }
+# If $try have :
+# 0 (read-only)
+# got [0] value.
+#
+# If $try have :
+# undef (read-only)
+# got [default] value.
+#
+# If $try have :
+# 0 (read-only)
+# got [0] value.
+#
+# If $try have :
+# 1 (read-only)
+# got [1] value.
+#
+# If $try have :
+# 25 (read-only)
+# got [25] value.
+
+{
+    use warnings;
+    my $name; # Значение не указано, undef!
+    # printf "%s", $name; # Use of uninitialized value in printf ...
+
+    # Но если вы ожидаете, что выводимое значение может оказаться неопределенным,
+    # его можно заменить пустой строкой:
+    use 5.10.0;
+    use warnings;
+    # $name; # Значение отсутствует, undef!
+    printf ">%s<\n", $name // '';
 }
+
+# УПРАВЛЯЮЩИЕ КОНСТРУКЦИИ С ОПЕРАТОРАМИ НЕПОЛНОГО ВЫЧИСЛЕНИЯ
+
+($m > 10) || print "why is it not greater? \n";
