@@ -531,5 +531,17 @@ print "I can talk to you!\n" if $Verbose;
 }
 
 # УПРАВЛЯЮЩИЕ КОНСТРУКЦИИ С ОПЕРАТОРАМИ НЕПОЛНОГО ВЫЧИСЛЕНИЯ
+{
+    my $mm = int(rand(20));
+    my $x = int(rand(20));
+    my $n = int(rand(20));
+    print "\$mm = $mm\n";
+    ($mm > 10) || print "why is it not greater? \n";
 
-($m > 10) || print "why is it not greater? \n";
+    $mm > $x ? $n = $x : $mm = $x;
+    print "\$x = $x\n";
+    print "\$mm = $mm\n";
+
+
+
+}
