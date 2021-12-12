@@ -374,7 +374,7 @@ print "Without LINE last go to next code after while loop\n";
 =end :text LINE
 =cut
 
-
+=begin :text Conditional
 
 # ТЕРНАРНЫЙ ОПЕРАТОР ?:
 
@@ -382,6 +382,115 @@ print "Without LINE last go to next code after while loop\n";
 # Оператор называется «тернарным», потому что он получает три операнда.
 # Оператор выглядит примерно так:
 #       выражение ? выражение_для_true : выражение_для_false
+# В этом примере результат вызова функции &is_weekend определяет, какое выражение будет присвоено переменной:
+my $location = &is_weekend($day) ? "home" : "work";
+# А здесь мы вычисляем и выводим среднее значение или строку-заполнитель из дефисов, если данные отсутствуют:
+my $average = $n ? ($total/$n) : "------"; print "Average: $average\n";
+# Любое использование оператора ?:  можно переписать в виде структуры if, но часто с потерей удобства и компактности:
+my $average;
+if ($n) {
+    $average = $total / $n;
+} else {
+    $average = "-----";
+}
+print "Average: $average\n";
+
+# А вот полезный прием, который может использоваться для кодирования удобного разветвленного выбора:
+my $width = 30;
+my $size =
+    ($width < 10) ? "small"  :
+    ($width < 20) ? "medium" :
+    ($width < 50) ? "large"  :
+        "extra-large"; # default
+print $size; # large
+$width = 15;
+# same code:
+$size =($width < 10)?"small":($width < 20)?"medium":($width < 50) ? "large":"extra-large"; # default
+print $size; # medium
+=end :text Conditional
+=cut
 
 
+=begin :text LOGICAL
+# ЛОГИЧЕСКИЕ ОПЕРАТОРЫ
 
+# логические условия часто объединяются логическими операторами AND (&&) и OR (||):
+#my %dessert = (cake=> 1);
+my %dessert;
+if ($dessert{'cake'} && $dessert{'ice cream'}) {
+# Оба условия истинны
+print "Hooray! Cake and ice cream!\n";
+} elsif ($dessert{'cake'} || $dessert{'ice cream'}) {
+# По крайней мере, одно условие истинно
+print "That's still good...\n";
+} else {
+  print "Оба условия ложны - ничего не делать\n";
+}
+# Что произойдет, если в приведенном примере переменная $hour равна 3:
+my $hour = 3;
+if ( (9 <= $hour) && ($hour < 17) ) {
+print "Aren't you supposed to be at work...?\n";
+}
+
+# Аналогично при истинности левой стороны логической операции  OR правая сторона также не вычисляется.
+# Допустим, в следующем выражении переменная $name содержит строку fred:
+my $name = 'fred';
+if ( ($name eq 'fred') || ($name eq 'barney') ) {
+print "You're my kind of guy '$name'!\n";
+}
+# $ You're my kind of guy 'fred'!
+
+# Из-за этой особенности такие операторы называют «ускоренными» (short-circuit).
+my ($nn, $totall) = (0, 15);
+if ( ($nn != 0) && ($totall/$nn < 5) ) {
+print "The average is below five.\n";
+}
+# В этом примере правая сторона вычисляется только в том случае, если левая сторона истинна.
+=end :text LOGICAL
+=cut
+
+=begin :text Short-Circuit Operator
+# ЗНАЧЕНИЕ УСКОРЕННОГО ЛОГИЧЕСКОГО ОПЕРАТОРА
+
+# В отличие от C (и других похожих языков), значением ускоренного логического оператора является значение,
+# полученное при обработке последней части, а не логическая величина.
+# Формально результат получается эквивалентным: последняя вычисленная часть всегда истинна,  если истинно все
+# выражение, и всегда ложна, если ложно все выражение. Однако такое  возвращаемое значение намного полезнее.
+# В частности, логический оператор OR весьма удобен для выбора значения по умолчанию:
+my %last_name;
+my $someone;
+my $last_name = $last_name{$someone} || '(No last name)';
+print $last_name; #  (No last name)
+# в этой идиоме значение по умолчанию не просто заменяет undef; оно с таким же успехом заменит любое ложное значение.
+# Проблема решается при помощи тернарного оператора:
+$someone = 'Ivan';
+%last_name = ($someone => 0);
+$last_name = defined $last_name{$someone} ?$last_name{$someone} : '(No last name)';
+print  $last_name; # 0
+# Однако запись получается слишком громоздкой, а $last_name{$someone} в нее включается дважды.
+# В Perl 5.10 появился более удобный синтаксис для выполнения подобных операций; он описан в следующем разделе.
+=end :text Short-Circuit Operator
+=cut
+
+# The DEFINED-OR OPERATOR or ОПЕРАТОР //
+# Даже если значение $last_name{$someone} равно 0, эта версия все равно работает:
+use 5.10.0;
+my %last_name;
+my $someone;
+my $last_name = $last_name{$someone} // '(No last name)'; # in 5.34.0 working at well both: old and this //
+
+# Допустим, программа должна выводить сообщения только при заданной переменной среды VERBOSE. Мы проверяем значение,
+# связанное с ключом VERBOSE в хеше %ENV. Если значение отсутствует, оно задается программой:
+use 5.10.0;
+my $Verbose = $ENV{VERBOSE} // 1;
+print "I can talk to you!\n" if $Verbose;
+
+
+# Следующая программа проверяет, как работает оператор //: она перебирает несколько значений и смотрит,
+# какие из них будут заменены значением по умолчанию default:
+use 5.10.0;
+foreach my $try ( 0, undef, '0', 1, 25 ) {
+print "Trying [$try] ---> ";
+my $value = $try // 'default';
+say "\tgot [$value]";
+}
