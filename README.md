@@ -1,4 +1,6 @@
 # own-------perl
+Решения задач после каждой главы находятся тут: <https://github.com/chicagoist/own_Exercises_From_Learning_Perl>
+
 
 Решение задач из учебника по регулярным выражениям для Perl.
 
