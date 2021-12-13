@@ -536,12 +536,18 @@ print "I can talk to you!\n" if $Verbose;
     my $x = int(rand(20));
     my $n = int(rand(20));
     print "\$mm = $mm\n";
+    print "\$x = $x\n";
+    print "\$n = $n\n\n";
     ($mm > 10) || print "why is it not greater? \n";
 
-    $mm > $x ? $n = $x : $mm = $x;
-    print "\$x = $x\n";
-    print "\$mm = $mm\n";
+    $mm > $x ? $x = $n : $mm = $n;
+
+    print "If \$mm < \$x will change: \$mm = $mm\n";
+    print "If \$mm > \$x will change: \$x = $x\n";
+    print "\$n = $n\n";
+
 
 
 
 }
+
