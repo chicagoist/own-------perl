@@ -472,6 +472,8 @@ print  $last_name; # 0
 =end :text Short-Circuit Operator
 =cut
 
+=begin :text DEFINED-OR
+
 # The DEFINED-OR OPERATOR or ОПЕРАТОР //
 # Даже если значение $last_name{$someone} равно 0, эта версия все равно работает:
 use 5.10.0;
@@ -529,8 +531,11 @@ print "I can talk to you!\n" if $Verbose;
     # $name; # Значение отсутствует, undef!
     printf ">%s<\n", $name // '';
 }
+=end :text DEFINED-OR
+=cut
 
-# УПРАВЛЯЮЩИЕ КОНСТРУКЦИИ С ОПЕРАТОРАМИ НЕПОЛНОГО ВЫЧИСЛЕНИЯ
+=begin :text Partial-Evaluation
+# УПРАВЛЯЮЩИЕ КОНСТРУКЦИИ С ОПЕРАТОРАМИ НЕПОЛНОГО ВЫЧИСЛЕНИЯ Partial-Evaluation
 {
     my $mm = int(rand(20));
     my $x = int(rand(20));
@@ -541,13 +546,21 @@ print "I can talk to you!\n" if $Verbose;
     ($mm > 10) || print "why is it not greater? \n";
 
     $mm > $x ? $x = $n : $mm = $n;
+    # Если $m меньше, $x присваивается ей, в противном случае $x присваивается переменной $n.
 
     print "If \$mm < \$x will change: \$mm = $mm\n";
     print "If \$mm > \$x will change: \$x = $x\n";
     print "\$n = $n\n";
 
+}
 
+{
+    # Общепринятый способ открытия файла в Perl выглядит так:
+    my $filename = 'text.txt';
+    open CHAPTER, $filename
+        or die "Can't open '$filename': $!";
 
 
 }
-
+=end :text Partial-Evaluation
+=cut
